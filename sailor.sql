@@ -86,6 +86,22 @@ WHERE sid NOT IN (
 select sname from sailors s where not exists
 	(select * from boat b where not exists
 		(select * from rservers r where r.sid=s.sid and b.bid=r.bid));
+
+
+-- OR 
+SELECT S.sname
+FROM SAILORS S
+WHERE NOT EXISTS (
+    SELECT B.bid
+    FROM BOAT B
+    WHERE NOT EXISTS (
+        SELECT R.bid
+        FROM RESERVERS R
+        WHERE R.sid = S.sid AND R.bid = B.bid
+    )
+);
+
+
         
 
 INSERT INTO rservers VALUES
